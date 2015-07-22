@@ -34,17 +34,21 @@ module Phase5
       param_hash = {}
 
       URI::decode_www_form(www_encoded_form).each do |key, val|
-        # param_hash[parse_key(pair[0])] = pair[1]
-        parse_key(key).each do |el|
+
+        parse_key(key).each_with_index do |el, id|
           if parse_key(key).last == el
 
-          else
+          elsif id == 0
             param_hash[el] = {}
+          else
+            param_hash[parse_key(key)]
           end
         end
       end
-      p param_hash
 
+
+      p param_hash
+      param_hash
     end
 
     # this should return an array
