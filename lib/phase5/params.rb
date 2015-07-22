@@ -1,4 +1,5 @@
 require 'uri'
+require 'byebug'
 
 module Phase5
   class Params
@@ -10,11 +11,15 @@ module Phase5
     # You haven't done routing yet; but assume route params will be
     # passed in as a hash to `Params.new` as below:
     def initialize(req, route_params = {})
-      @params = parse_www_encoded_form(req.query_string) unless req.query_string.nil?
+      body, query = req.body, req.query_string
+
+      query_params = query ? parse_www_encoded_form(query) : {}
+      body_params = body ? parse_www_encoded_form(body) : {}
+      @params = route_params.merge(query_params).merge(body_params)
     end
 
     def [](key)
-      @params[key.to_s]
+      @params[key.to_s] || @params[key.to_sym]
     end
 
     # this will be useful if we want to `puts params` in the server log
@@ -32,22 +37,20 @@ module Phase5
     # { "user" => { "address" => { "street" => "main", "zip" => "89436" } } }
     def parse_www_encoded_form(www_encoded_form)
       param_hash = {}
+      URI::decode_www_form(www_encoded_form).each do |kv_pair|
+        current = param_hash
+        keys = parse_key(kv_pair.first)
+        val = kv_pair.last
 
-      URI::decode_www_form(www_encoded_form).each do |key, val|
-
-        parse_key(key).each_with_index do |el, id|
-          if parse_key(key).last == el
-
-          elsif id == 0
-            param_hash[el] = {}
+        keys.each do |key|
+          if key == keys.last
+            current[key] = val
           else
-            param_hash[parse_key(key)]
+            current[key] ||= {}
+            current = current[key]
           end
         end
       end
-
-
-      p param_hash
       param_hash
     end
 
