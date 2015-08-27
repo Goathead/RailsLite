@@ -13,6 +13,5 @@ module Phase3
       content = ERB.new(template).result(binding)
       render_content(content, "text/html")
     end
-
   end
 end
