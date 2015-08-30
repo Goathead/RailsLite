@@ -32,7 +32,7 @@ class Cat
   end
 end
 
-class CatsController < Phase5::ControllerBase
+class CatsController < ControllerBase
   def create
     @cat = Cat.new(params["cat"])
     if @cat.save
