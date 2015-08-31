@@ -8,10 +8,10 @@ require_relative '../lib/rails_lite/controller_base'
 
 class MyController < ControllerBase
   def go
-    if @req.path == "/cats"
-      render_content("hello cats!", "text/html")
+    if @req.path == "/foobar"
+      render_content("Welcome to Rails Lite!", "text/html")
     else
-      redirect_to("/cats")
+      redirect_to("/foobar")
     end
   end
 end
