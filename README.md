@@ -1,6 +1,7 @@
 ## RailsLite
 
-A bare-bones version of Ruby on Rails completed as part of the App Academy curriculum.
+A simple web application framework modeled on Ruby on Rails. Supplies a ControllerBase class for controllers to inherit generic methods from, parses URL params, and can store session data in a WEBrick::Cookie. The core code is in the lib/rails_lite directory.
+
 ### Features
 
 * A ControllerBase class to store methods for Controllers to inherit.
@@ -8,8 +9,6 @@ A bare-bones version of Ruby on Rails completed as part of the App Academy curri
 * Session-storing cookie functionality.
 * URL, query string, and request body param parsing.
 * HTTP request routing.
-
-The main framework code is in the lib/rails_lite directory.
 
 ### Tests
 The tests directory contains simple server tests to demo functionality. Run them and navigate to localhost:3000 in your browser to try them out.
